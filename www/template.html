@@ -1,0 +1,88 @@
+<html itemscope itemtype="http://schema.org/WebApplication" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	{{ headContent() }}
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+	{{ includeCSS('www/bootstrap.css') }}
+	{{ includeCSS('www/formstyle.css') }}
+
+</style>
+
+</head>
+
+	<body>
+  
+		<div style="margin-left:10%; margin-right:25%">
+			<h2>TNPSC Group 1 Exams Selection Statistics</h2>
+			<h4>How often does someone with your background get selected for a Group 1 post?</h4>
+			
+			<hr />
+			
+			<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div> 
+
+			<b>Instructions</b>
+			<ol>
+			  <li>Input your characteristics</li>
+			  <li>Click the "Calculate" button to see results</li>
+			</ol>
+			
+			<form class="form-style-9">
+				<fieldset>
+				<p>Special reservations</p>
+				<p><input type="checkbox" id="pstm" name="pstm"><label for="pstm">Studied in Tamil Medium (PSTM)</label></p>
+				<p><input type="checkbox" id="dw" name="dw"><label for="dw">Destitute Widow</label></p>
+				<p><input type="checkbox" id="exservice" name="exservice"><label for="exservice">Ex-Serviceman</label></p>
+				<p><input type="checkbox" id="blind" name="blind"><label for="blind">Visual Impairment</label></p>
+				<input type="checkbox" id="deaf" name="deaf"><label for="deaf">Hearing Impairment</label>
+				<input type="checkbox" id="ortho" name="ortho"><label for="deaf">Orthopaedic Impairment</label>
+				</fieldset>
+			</form>
+			
+			
+		
+			<h3>Data</h3>
+			
+			<table>
+			   <tr>
+				<td>Wrote Prelim Exam</td>
+				<td><div id="wrote_prelim" class="shiny-text-output"></div></td>
+			  </tr>
+			  <tr>
+				<td>Selected for Mains</td>
+				<td><div id="wrote_main" class="shiny-text-output"></div></td>
+			  </tr>
+			  <tr>
+				<td>Selected for Post</td>
+				<td><div id="selected" class="shiny-text-output"></div></td>
+			  </tr>
+			</table>
+			
+			Statistics:
+			<table>
+			   <tr>
+				<td>Selection rate</td>
+				<td>1 in XXXX</td>
+			  </tr>
+			  <tr>
+				<td>Selected for Mains</td>
+				<td>XXXX</td>
+			  </tr>
+			</table>		
+		
+		</div>
+
+		<hr />
+
+		<center>
+			<div id="about">
+				<p>Developed by the TNPSC Aspirants and Alumni Research Study, based at Azim Premji University</p>
+				<p>Data provided by <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">TNPSC</a> through the Open Data Policy</p>
+			</div>
+		</center>
+
+	</body>
+
+</html>
