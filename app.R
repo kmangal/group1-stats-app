@@ -15,11 +15,6 @@
 
 library(shiny)
 
-library(data.table)
-
-# Load data into main namespace
-prelim <- fread('data/selection_01_2019.csv')
-
 
 
 # Define UI for application that draws a histogram

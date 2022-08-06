@@ -4,8 +4,8 @@ library(data.table)
 
 
 # Application data
-app <- fread('data/raw/selection_01_2019.csv')
-
+app <- fread('data/raw/application_01_2019.csv')
+saveRDS(app, 'data/clean/application_01_2019.Rds')
 
 # Selection data
 selection <- fread('data/raw/selection_01_2019.csv')
