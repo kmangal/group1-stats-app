@@ -10,6 +10,26 @@ library(data.table)
 # Application data
 app <- fread('data/raw/application_01_2019.csv')
 names(app) <- tolower(names(app))
+
+app$blind <- as.integer(app$pwdvh == "YES")
+app$deaf <- as.integer(app$pwdhh == "YES")
+app$ortho <- as.integer(app$pwdlh == "YES")
+app$exservice <- as.integer(app$exser == "YES")
+app$widow <- as.integer(app$widow == "YES")
+
+app$highest.qual <- ""
+app$highest.qual <- ifelse(app$ugdegree != "", "UG", app$highest.qual)
+app$highest.qual <- ifelse(app$ugldegree != "", "UG", app$highest.qual)
+app$highest.qual <- ifelse(app$eqdegmajsub != "", "UG", app$highest.qual)
+app$highest.qual <- ifelse(app$pgdegree != "", "PG", app$highest.qual)
+app$highest.qual <- ifelse(app$ipgdegree != "", "PG", app$highest.qual)
+app$highest.qual <- ifelse(app$mphilmajor != "", "MPhil/PhD", app$highest.qual)
+app$highest.qual <- ifelse(app$phdmajor != "", "MPhil/PhD", app$highest.qual)
+
+table(app$highest.qual)
+
+app$age <- 2019 - as.integer(app$dob)
+
 #saveRDS(app, 'data/clean/application_01_2019.Rds')
 
 # Selection data
@@ -42,8 +62,8 @@ df <- df %>% left_join(selection %>% select(regno, selcat), by = 'regno')
 df <- df %>% mutate(selected = as.integer(!is.na(selcat)))
 
 df <- df %>% 
-  select(regno, gender, dob, nativedistrict, religion, community, exser, widow, govtemp, 
+  select(regno, gender, age, nativedistrict, religion, community, highest.qual,
+         exservice, widow, blind, deaf, ortho, govtemp, 
          wrote.prelim, total.prelim, wrote.main, total.main, selected)
 
 saveRDS(df, 'data/clean/merged_01_2019.Rds')
-
