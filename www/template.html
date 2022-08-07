@@ -7,7 +7,6 @@
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 	{{ includeCSS('www/bootstrap.css') }}
-	{{ includeCSS('www/formstyle.css') }}
 
 </style>
 
@@ -16,62 +15,117 @@
 	<body>
   
 		<div style="margin-left:10%; margin-right:25%">
-			<h2>TNPSC Group 1 Exams Selection Statistics</h2>
-			<h4>How often does someone with your background get selected for a Group 1 post?</h4>
+			<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div> 
+			
+			<br />
+			
+			<h2>TNPSC Group 1 Exam Selection Statistics</h2>
+			<h4>How common is it for someone with your background to get selected for a Group 1 post?</h4>
 			
 			<hr />
-			
-			<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div> 
-
-			<b>Instructions</b>
-			<ol>
-			  <li>Input your characteristics</li>
-			  <li>Click the "Calculate" button to see results</li>
-			</ol>
-			
-			<form class="form-style-9">
+						
+			<form>
 				<fieldset>
-				<p>Special reservations</p>
-				<p><input type="checkbox" id="pstm" name="pstm"><label for="pstm">Studied in Tamil Medium (PSTM)</label></p>
-				<p><input type="checkbox" id="dw" name="dw"><label for="dw">Destitute Widow</label></p>
-				<p><input type="checkbox" id="exservice" name="exservice"><label for="exservice">Ex-Serviceman</label></p>
-				<p><input type="checkbox" id="blind" name="blind"><label for="blind">Visual Impairment</label></p>
-				<input type="checkbox" id="deaf" name="deaf"><label for="deaf">Hearing Impairment</label>
-				<input type="checkbox" id="ortho" name="ortho"><label for="deaf">Orthopaedic Impairment</label>
+					<label for="age">Age</label><select name="age" id="age">
+					  <option value="ANY">Any</option>
+					  <option value="21_25">21-25</option>
+					  <option value="26_30">26-30</option>
+					  <option value="31_35">31-35</option>
+					  <option value="36+">36+</option>
+					</select>
+					<label for="qualification">Highest qualification</label><select name="qualification" id="qualification">
+					  <option value="ANY">Any</option>
+					  <option value="UG">Undergraduate</option>
+					  <option value="PG">Postgraduate</option>
+					  <option value="MPhil/PhD">MPhil / PhD</option>
+					</select>
+					<label for="nativedistrict">Native District</label><select name="nativedistrict" id="nativedistrict">
+					  <option value="ANY">Any</option>
+					  <option value="ARIYALUR">Ariyalur</option>
+					  <option value="CHENNAI">Chennai</option>
+					  <option value="COIMBATORE">Coimbatore</option>
+					  <option value="CUDDALORE">Cuddalore</option>
+					  <option value="DHARMAPURI">Dharmapuri</option>
+					  <option value="DINDIGUL">Dindigul</option>
+					  <option value="ERODE">Erode</option>
+					  <option value="KANCHEEPURAM">Kancheepuram</option>
+					  <option value="KANNIYAKUMARI">Kanniyakumari</option>
+					  <option value="KARUR">Karur</option>
+					  <option value="KRISHNAGIRI">Krishnagiri</option>
+					  <option value="MADURAI">Madurai</option>
+					  <option value="NAGAPATTINAM">Nagapattinam</option>
+					  <option value="NAMAKKAL">Namakkal</option>
+					  <option value="OTHER THAN TAMILNADU">Outside Tamil Nadu</option>
+					  <option value="PERAMBALUR">Perambalur</option>
+					  <option value="PUDUKKOTTAI">Pudukkottai</option>
+					  <option value="RAMANATHAPURAM">Ramanathapuram</option>
+					  <option value="SALEM">Salem</option>
+					  <option value="SIVAGANGAI">Sivagangai</option>
+					  <option value="THANJAVUR">Thanjavur</option>
+					  <option value="THE NILGIRIS">The Nilgiris</option>
+					  <option value="THENI">Theni</option>
+					  <option value="THIRUNELVELI">Thirunelveli</option>
+					  <option value="THIRUVALLUR">Thiruvallur</option>
+					  <option value="THIRUVANNAMALAI">Thiruvannamalai</option>
+					  <option value="THIRUVARUR">Thiruvarur</option>
+					  <option value="THOOTHUKUDI">Thoothukudi</option>
+					  <option value="TIRUCHIRAPALLI">Tiruchirapalli</option>
+					  <option value="TIRUPPUR">Tiruppur</option>
+					  <option value="VELLORE">Vellore</option>
+					  <option value="VILLUPURAM">Viillupruam</option>
+					  <option value="VIRUDHUNAGAR">Virudhunagar</option>
+					</select>
+				</fieldset>
+				<fieldset>
+					<p>
+						<input type="checkbox" id="pstm" name="pstm"><label for="pstm">Studied in Tamil Medium (PSTM)</label>
+						<input type="checkbox" id="widow" name="widow"><label for="widow">Destitute Widow</label>
+						<input type="checkbox" id="exservice" name="exservice"><label for="exservice">Ex-Serviceman</label>
+					</p>
+					<p>
+						<input type="checkbox" id="blind" name="blind"><label for="blind">Visual Impairment</label>
+						<input type="checkbox" id="deaf" name="deaf"><label for="deaf">Hearing Impairment</label>
+						<input type="checkbox" id="ortho" name="ortho"><label for="deaf">Orthopaedic Impairment</label>
+					</p>
 				</fieldset>
 			</form>
 			
+			<div>
+				{{ actionButton("submit", "Calculate") }}
+			</div>
 			
+			<hr />
 		
-			<h3>Data</h3>
+			<h4>Statistics from the 2019 Group 1 Recruitment</h4>
 			
-			<table>
-			   <tr>
-				<td>Wrote Prelim Exam</td>
-				<td><div id="wrote_prelim" class="shiny-text-output"></div></td>
-			  </tr>
-			  <tr>
-				<td>Selected for Mains</td>
-				<td><div id="wrote_main" class="shiny-text-output"></div></td>
-			  </tr>
-			  <tr>
-				<td>Selected for Post</td>
-				<td><div id="selected" class="shiny-text-output"></div></td>
-			  </tr>
-			</table>
-			
-			Statistics:
-			<table>
-			   <tr>
-				<td>Selection rate</td>
-				<td>1 in XXXX</td>
-			  </tr>
-			  <tr>
-				<td>Selected for Mains</td>
-				<td>XXXX</td>
-			  </tr>
-			</table>		
-		
+			<div>
+				<table>
+				   <tr>
+					<td>Wrote Prelim Exam</td>
+					<td><div id="wrote_prelim" class="shiny-text-output"></div></td>
+				  </tr>
+				  <tr>
+					<td>Selected for Mains</td>
+					<td><div id="wrote_main" class="shiny-text-output"></div></td>
+				  </tr>
+				  <tr>
+					<td>Selected for Post</td>
+					<td><div id="selected" class="shiny-text-output"></div></td>
+				  </tr>
+				</table>
+			</div>
+			<div>
+				<table>
+				   <tr>
+					<td>Selection rate</td>
+					<td>1 in XXXX</td>
+				  </tr>
+				  <tr>
+					<td>Selected for Mains</td>
+					<td>XXXX</td>
+				  </tr>
+				</table>		
+			</div>
 		</div>
 
 		<hr />
@@ -79,7 +133,7 @@
 		<center>
 			<div id="about">
 				<p>Developed by the TNPSC Aspirants and Alumni Research Study, based at Azim Premji University</p>
-				<p>Data provided by <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">TNPSC</a> through the Open Data Policy</p>
+				<p>Data provided by the <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">Tamil Nadu Public Service Commission</a> through the Open Data Policy</p>
 			</div>
 		</center>
 
