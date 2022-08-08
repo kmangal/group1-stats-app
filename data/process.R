@@ -14,6 +14,19 @@ names(app) <- tolower(names(app))
 app$blind <- as.integer(app$pwdvh == "YES")
 app$deaf <- as.integer(app$pwdhh == "YES")
 app$ortho <- as.integer(app$pwdlh == "YES")
+app$mental <- as.integer(app$pwdmh == "YES")
+
+app <- app %>% mutate(disability.sum = blind+ deaf + ortho + mental)
+
+app$disability <- case_when(
+  (app$blind == 1) & (app$disability.sum == 1) ~ 'blind',
+  (app$deaf == 1) & (app$disability.sum == 1) ~ 'deaf',
+  (app$ortho == 1) & (app$disability.sum == 1) ~ 'ortho',
+  (app$mental == 1) | (app$disability.sum > 1) ~ 'multda',
+  TRUE ~ 'none'
+)
+
+app$pstm <- pmax(as.integer(app$eqpstm == "YES"), as.integer(app$uglpstm == "YES"), as.integer(app$ugpstm == "YES"))
 app$exservice <- as.integer(app$exser == "YES")
 app$widow <- as.integer(app$widow == "YES")
 
@@ -63,7 +76,8 @@ df <- df %>% mutate(selected = as.integer(!is.na(selcat)))
 
 df <- df %>% 
   select(regno, gender, age, nativedistrict, religion, community, highest.qual,
-         exservice, widow, blind, deaf, ortho, govtemp, 
+         pstm, exservice, widow, disability, govtemp, 
          wrote.prelim, total.prelim, wrote.main, total.main, selected)
 
 saveRDS(df, 'data/clean/merged_01_2019.Rds')
+

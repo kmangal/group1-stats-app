@@ -4,37 +4,63 @@
 # Author: Kunal Mangal, Visiting Fellow, Azim Premji University
 #         kunal.mangal@apu.edu.in
 #
-# Purpose: 
-#
 # Data: Obtained from TNPSC through the open data policy at
 #       https://tnpsc.gov.in/English/OpenDataPolicy.aspx
 #
-
+####################################################################
 
 library(shiny)
+library(shiny.i18n)
 library(tidyverse)
 
-
+####################################################################
 # Helper functions
+
 f.format_input <- function(val){
   return(as.integer((val)))
 }
 
-f.filter_count <- function(input, var) {
+f.format_number <- function(n) {
+  # Source: https://stackoverflow.com/a/71127294
+  dec <- round(n %% 1, 2)
+  dec <- ifelse(dec < 0.01, "", substr(dec, 2, 4))
+  int <- n %/% 1
+  ints <- vapply(int, function(x) {
+    x <- as.character(x)
+    len <- nchar(x)
+    if(len <= 3) return(x)
+    rev_x <- paste(rev(unlist(strsplit(x, ""))), collapse = "")
+    str   <- paste0(substr(rev_x, 1, 3), ",")
+    str2  <- substr(rev_x, 4, 100)
+    str2  <- gsub("(\\d{2})", "\\1,", str2)
+    rev_x <- paste0(str, str2)
+    return(paste(rev(unlist(strsplit(rev_x, ""))), collapse = ""))
+  }, character(1))
   
+  num <- sub("^,", "", paste0(ints, dec))
+  
+  return(gsub(" ", "", num, fixed = TRUE))
+}
+
+f.filter_count <- function(input, var) {
+
+  input.pstm <- f.format_input(input$pstm)
   input.exservice <- f.format_input(input$exservice)
   input.widow <- f.format_input(input$widow)
+  
   input.blind <- f.format_input(input$blind)
   input.deaf <- f.format_input(input$deaf)
   input.ortho <- f.format_input(input$ortho)
   
   # Filter check boxes
   df.filtered <- df %>%
-    filter(exservice >= input.exservice, 
-           widow >= input.widow, 
-           blind >= input.blind, 
-           deaf >= input.deaf,
-           ortho >= input.ortho)
+    filter(pstm >= input.pstm,
+           exservice >= input.exservice, 
+           widow >= input.widow)
+  
+  if (input$gender != "ANY"){
+    df.filtered <- df.filtered %>% filter(gender == input$gender)
+  }
   
   if (input$qualification != "ANY") {
     df.filtered <- df.filtered %>% filter(highest.qual == input$qualification)
@@ -42,6 +68,10 @@ f.filter_count <- function(input, var) {
   
   if (input$nativedistrict != "ANY") {
     df.filtered <- df.filtered %>% filter(nativedistrict == input$nativedistrict)
+  }
+
+  if (input$disability != "NONE"){
+    df.filtered <- df.filtered %>% filter(disability == input$disability)
   }
   
   if (input$age != "ANY") {
@@ -54,7 +84,8 @@ f.filter_count <- function(input, var) {
     df.filtered <- df.filtered %>% filter(age >= agelimits[1], age <= agelimits[2])
   }
   
-  return(sum(df.filtered[[var]]))
+  output <- sum(df.filtered[[var]])
+  return(output)
   
 }
 
@@ -67,43 +98,50 @@ f.filter_selection_rate_overall <- function(input){
   }
   else {
     x <- round(wrote.prelim / selected, 0)
-    return(paste0("1 in ", x))
+    return(paste0("1 in ", f.format_number(x)))
   }
 
 }
 
+
+####################################################################
+# Translation logic
+
 # TODO: IMPLEMENT TRANSLATION LOGIC
 # https://www.r-bloggers.com/2014/11/another-take-on-building-a-multi-lingual-shiny-app/
 # https://airbnb.io/polyglot.js/
+# https://appsilon.com/internationalization-of-shiny-apps-i18n/
+#i18n <- Translator$new(translation_csvs_path = "./translation")
 
+####################################################################
 # Load data
+
 df <- readRDS('data/clean/merged_01_2019.Rds')
 
+####################################################################
 # Sever logic
+
 server <- function(input, output) {
   
   output$wrote_prelim <- renderText({ 
-    input$submit
-    isolate(f.filter_count(input, 'wrote.prelim'))
+    f.format_number(f.filter_count(input, 'wrote.prelim'))
   })
   
   output$wrote_main <- renderText({ 
-    input$submit
-    isolate(f.filter_count(input, 'wrote.main'))
+    f.format_number(f.filter_count(input, 'wrote.main'))
   })
   
   output$selected <- renderText({
-    input$submit
-    isolate(f.filter_count(input, 'selected'))
+    f.format_number(f.filter_count(input, 'selected'))
   })
   
   output$selection_rate_overall <- renderText({
-    input$submit
-    isolate(f.filter_selection_rate_overall(input))
+    f.filter_selection_rate_overall(input)
   })
   
 }
 
+####################################################################
 # Run the application 
 
 html <- read_file("www/template.html")

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
+
+text {
+  font: "Lato", sans-serif;
+}
+
+h1.title {
+	color:#04AA6D;
+	text-transform:uppercase;
+	font-weight: bold;        
+    font-size: 2rem;
+}
+
+label {
+    /*padding-right: 5px;*/
+}
+ 
+label.checkbox-label {
+	padding-left: 5px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 100px 300px;
+  column-gap: 10px;
+  row-gap: 1em;
+}
+
+.form-heading {
+	font-size: 18px;
+	padding-bottom: 5px;
+}
