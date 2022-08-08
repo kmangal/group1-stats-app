@@ -58,6 +58,20 @@ f.filter_count <- function(input, var) {
   
 }
 
+f.filter_selection_rate_overall <- function(input){
+  wrote.prelim <- f.filter_count(input, 'wrote.prelim')
+  selected <- f.filter_count(input, 'selected')
+  
+  if (selected == 0){
+    return("Selection rate too low to estimate")
+  }
+  else {
+    x <- round(wrote.prelim / selected, 0)
+    return(paste0("1 in ", x))
+  }
+
+}
+
 # TODO: IMPLEMENT TRANSLATION LOGIC
 # https://www.r-bloggers.com/2014/11/another-take-on-building-a-multi-lingual-shiny-app/
 # https://airbnb.io/polyglot.js/
@@ -69,15 +83,23 @@ df <- readRDS('data/clean/merged_01_2019.Rds')
 server <- function(input, output) {
   
   output$wrote_prelim <- renderText({ 
-    f.filter_count(input, 'wrote.prelim')
+    input$submit
+    isolate(f.filter_count(input, 'wrote.prelim'))
   })
   
   output$wrote_main <- renderText({ 
-    f.filter_count(input, 'wrote.main')
+    input$submit
+    isolate(f.filter_count(input, 'wrote.main'))
   })
   
-  output$selected <- renderText({ 
-    f.filter_count(input, 'selected')
+  output$selected <- renderText({
+    input$submit
+    isolate(f.filter_count(input, 'selected'))
+  })
+  
+  output$selection_rate_overall <- renderText({
+    input$submit
+    isolate(f.filter_selection_rate_overall(input))
   })
   
 }
