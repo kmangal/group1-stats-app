@@ -4,8 +4,6 @@
 
 	{{ headContent() }}
 
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
 	{{ includeCSS('www/bootstrap.css') }}
 	{{ includeCSS('www/main.css') }}
 	{{ includeCSS('www/stats-table.css') }}
@@ -22,7 +20,7 @@
 			<br />
 			-->
 			<h1 class="title">TNPSC Group 1 Exam Statistics</h1>
-			<h4>Use data from the 2019 Group 1 Recruitment to learn about the selection rate</h4>
+			<h4>Use <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">open data</a> from the 2019 Group 1 Recruitment to learn about the selection rate</h4>
 			<div>Background information about this recruitment:
 				<ul>
 					<li>Total vacancies: 181</li>
@@ -31,8 +29,8 @@
 			</div>
 			<div>When using this application, please keep the following points in mind:
 				<ul>
-					<li>The selection rate depends on many factors that may change from year to year. The selection rate will therefore not be exactly the same in future recruitments.</li>
-					<li>Still, these statstics provide us with a rough idea of provide us with give us a general understanding of thehow difficult it is to get selected, and to understand which types of candidates are most likely to get selected.</li>
+					<li>The selection rate may not be exactly the same in future recruitments, due to factors that change from year to year.</li>
+					<li>Still, these statstics are useful because the selection rate is unlikely to change too much between recruitments, so they provide us with a general understanding of the difficulty of getting selected for specific types of candidates.</li>
 				</ul>			
 			</div>
 			<hr />
@@ -176,12 +174,17 @@
 			</h1>
 			<h4>Prelim Exam Scores</h4>
 			<center>
-			<div id="prelim_score_dist" class="shiny-plot-output" style="width: 80%; max-width: 500px; height: 400px;"></div>
+			<div class="container-fluid">
+				{{ girafeOutput("prelim_score_dist") }}
+			</div>
 			</center>
 			<br />
 			<h4>Main Exam Scores</h4>
 			<center>
-			<div id="main_score_dist" class="shiny-plot-output" style="width: 80%; max-width: 500px; height: 400px;"></div>
+			<!--<div id="main_score_dist" class="girafe html-widget html-widget-output shiny-bound-output" style="width: 80%; max-width: 500px; height: 400px;"></div>-->
+			<div class="container-fluid">
+				{{ girafeOutput("main_score_dist") }}
+			</div>
 			</center>
 		</div>
 		<hr />

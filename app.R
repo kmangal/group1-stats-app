@@ -12,10 +12,9 @@
 
 library(shiny)
 library(shiny.i18n)
-library(plotly)
 
 library(tidyverse)
-library(scales)
+library(ggiraph)
 
 ####################################################################
 # Helper functions
@@ -120,10 +119,13 @@ f.prelim_score_dist <- function(input){
   df.filtered <- f.filter_data(input)
   plot <- df.filtered %>%
     filter(!is.na(total.prelim)) %>%
-    ggplot(aes(x = total.prelim)) +
+    mutate(score.bin = floor(total.prelim / 10) * 10) %>%
+    group_by(score.bin) %>%
+    summarise(n = n()) %>%
+    ggplot(aes(x = score.bin, y = n)) +
       xlab("") +
       ylab("Number of candidates") +
-      geom_histogram(color = 'black', fill = "#118a5d", binwidth = 10) +
+      geom_col_interactive(aes(tooltip = n), color = 'black', fill = "#0eb074") +
       theme_bw() +
       theme(axis.text = element_text(size = 12), 
           axis.title=element_text(size=16))
@@ -137,7 +139,7 @@ f.main_score_dist <- function(input){
     ggplot(aes(x = total.main)) +
     xlab("") +
     ylab("Number of candidates") +
-    geom_histogram(color = 'black', fill = "#118a5d", binwidth = 10) +
+    geom_histogram(color = 'black', fill = "#0eb074", binwidth = 10) +
     theme_bw() +
     theme(axis.text = element_text(size = 12), 
           axis.title=element_text(size=16))
@@ -179,12 +181,12 @@ server <- function(input, output) {
     f.filter_selection_rate_overall(input)
   })
   
-  output$prelim_score_dist <- renderPlot({
-    f.prelim_score_dist(input)
+  output$prelim_score_dist <- renderGirafe({
+    girafe( ggobj = f.prelim_score_dist(input) )
   })
   
-  output$main_score_dist <- renderPlot({
-    f.main_score_dist(input)
+  output$main_score_dist <- renderGirafe({
+    girafe( ggobj = f.main_score_dist(input) )
   })
   
 }
