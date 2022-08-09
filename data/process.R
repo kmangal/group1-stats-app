@@ -26,6 +26,13 @@ app$disability <- case_when(
   TRUE ~ 'none'
 )
 
+app <- app %>% rename(community.full = community)
+
+app$community <- case_when(
+  (app$community.full == "OTHERS") ~ "OTHERS",
+  TRUE ~ str_extract(app$community.full, "(?<=\\()(.*?)(?=\\))")
+)
+
 app$pstm <- pmax(as.integer(app$eqpstm == "YES"), as.integer(app$uglpstm == "YES"), as.integer(app$ugpstm == "YES"))
 app$exservice <- as.integer(app$exser == "YES")
 app$widow <- as.integer(app$widow == "YES")

@@ -8,10 +8,14 @@
 #       https://tnpsc.gov.in/English/OpenDataPolicy.aspx
 #
 ####################################################################
+# Import libraries
 
 library(shiny)
 library(shiny.i18n)
+library(plotly)
+
 library(tidyverse)
+library(scales)
 
 ####################################################################
 # Helper functions
@@ -42,8 +46,8 @@ f.format_number <- function(n) {
   return(gsub(" ", "", num, fixed = TRUE))
 }
 
-f.filter_count <- function(input, var) {
-
+f.filter_data <- function(input){
+  
   input.pstm <- f.format_input(input$pstm)
   input.exservice <- f.format_input(input$exservice)
   input.widow <- f.format_input(input$widow)
@@ -62,6 +66,10 @@ f.filter_count <- function(input, var) {
     df.filtered <- df.filtered %>% filter(gender == input$gender)
   }
   
+  #if (input$community != "ANY"){
+  #  df.filtered <- df.filtered %>% filter(community == input$community)
+  #}
+  
   if (input$qualification != "ANY") {
     df.filtered <- df.filtered %>% filter(highest.qual == input$qualification)
   }
@@ -69,7 +77,7 @@ f.filter_count <- function(input, var) {
   if (input$nativedistrict != "ANY") {
     df.filtered <- df.filtered %>% filter(nativedistrict == input$nativedistrict)
   }
-
+  
   if (input$disability != "NONE"){
     df.filtered <- df.filtered %>% filter(disability == input$disability)
   }
@@ -84,9 +92,13 @@ f.filter_count <- function(input, var) {
     df.filtered <- df.filtered %>% filter(age >= agelimits[1], age <= agelimits[2])
   }
   
-  output <- sum(df.filtered[[var]])
-  return(output)
-  
+  return(df.filtered)
+
+}
+
+f.filter_count <- function(input, var) {
+  df.filtered <- f.filter_data(input)
+  return(sum(df.filtered[[var]]))
 }
 
 f.filter_selection_rate_overall <- function(input){
@@ -103,6 +115,34 @@ f.filter_selection_rate_overall <- function(input){
 
 }
 
+
+f.prelim_score_dist <- function(input){
+  df.filtered <- f.filter_data(input)
+  plot <- df.filtered %>%
+    filter(!is.na(total.prelim)) %>%
+    ggplot(aes(x = total.prelim)) +
+      xlab("") +
+      ylab("Number of candidates") +
+      geom_histogram(color = 'black', fill = "#118a5d", binwidth = 10) +
+      theme_bw() +
+      theme(axis.text = element_text(size = 12), 
+          axis.title=element_text(size=16))
+  return(plot)
+}
+
+f.main_score_dist <- function(input){
+  df.filtered <- f.filter_data(input)
+  plot <- df.filtered %>%
+    filter(!is.na(total.main)) %>%
+    ggplot(aes(x = total.main)) +
+    xlab("") +
+    ylab("Number of candidates") +
+    geom_histogram(color = 'black', fill = "#118a5d", binwidth = 10) +
+    theme_bw() +
+    theme(axis.text = element_text(size = 12), 
+          axis.title=element_text(size=16))
+  return(plot)
+}
 
 ####################################################################
 # Translation logic
@@ -137,6 +177,14 @@ server <- function(input, output) {
   
   output$selection_rate_overall <- renderText({
     f.filter_selection_rate_overall(input)
+  })
+  
+  output$prelim_score_dist <- renderPlot({
+    f.prelim_score_dist(input)
+  })
+  
+  output$main_score_dist <- renderPlot({
+    f.main_score_dist(input)
   })
   
 }

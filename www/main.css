@@ -4,8 +4,12 @@ text {
   font: "Lato", sans-serif;
 }
 
+a {
+  color: #118a5d;
+}
+
 h1.title {
-	color:#04AA6D;
+	color:#118a5d;
 	text-transform:uppercase;
 	font-weight: bold;        
     font-size: 2rem;

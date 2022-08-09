@@ -17,22 +17,22 @@
 	<body>
   
 		<div style="margin-left:10%; margin-right:10%">
-			<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div> 
+			<!--<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div>
 			
 			<br />
-			
+			-->
 			<h1 class="title">TNPSC Group 1 Exam Statistics</h1>
 			<h4>Use data from the 2019 Group 1 Recruitment to learn about the selection rate</h4>
 			<div>Background information about this recruitment:
 				<ul>
 					<li>Total vacancies: 181</li>
-					<li>Reservation details: click here for more information</li>
+					<li>Reservation details: <a href="https://tnpsc.gov.in/Document/English/2019_01_Gr_I_Addendum.pdf">click here</a> for more information</li>
 				</ul>
 			</div>
 			<div>When using this application, please keep the following points in mind:
 				<ul>
-					<li>The selection rate will naturally vary from year to year. </li>
-					<li></li>
+					<li>The selection rate depends on many factors that may change from year to year. The selection rate will therefore not be exactly the same in future recruitments.</li>
+					<li>Still, these statstics provide us with a rough idea of provide us with give us a general understanding of thehow difficult it is to get selected, and to understand which types of candidates are most likely to get selected.</li>
 				</ul>			
 			</div>
 			<hr />
@@ -43,6 +43,17 @@
 				  <option value="MALE">Male</option>
 				  <option value="FEMALE">Female</option>
 				</select>
+				<!--<label for="community">Community</label><select name="community" id="community">
+				  <option value="ANY">Any</option>
+				  <option value="BC">Backward Class</option>
+				  <option value="BCM">Backward Class - Muslim</option>
+				  <option value="DC">Denotified Community</option>
+				  <option value="MBC">Most Backward Class</option>
+				  <option value="SC">Scheduled Caste</option>
+				  <option value="SCA">Scheduled Caste - Arunthathiar</option>
+				  <option value="ST">Scheduled Tribe</option>
+				  <option value="OTHERS">Others</option>				  
+				</select>-->
 				<label for="age">Age</label><select name="age" id="age">
 				  <option value="ANY">Any</option>
 				  <option value="21_25">21-25</option>
@@ -50,7 +61,7 @@
 				  <option value="31_35">31-35</option>
 				  <option value="36+">36+</option>
 				</select>
-				<label for="qualification">Qualification</label><select name="qualification" id="qualification">
+				<label for="qualification">Highest Degree</label><select name="qualification" id="qualification">
 				  <option value="ANY">Any</option>
 				  <option value="UG">Undergraduate</option>
 				  <option value="PG">Postgraduate</option>
@@ -163,8 +174,15 @@
 			<h1 class="heading">
 				Detailed Performance Statistics
 			</h1>
-			<h4>Selected for mains</h4>
-			<div id="plot" class="shiny-plot-output" style="width: 80%; max-width: 500px; height: 400px;"></div>
+			<h4>Prelim Exam Scores</h4>
+			<center>
+			<div id="prelim_score_dist" class="shiny-plot-output" style="width: 80%; max-width: 500px; height: 400px;"></div>
+			</center>
+			<br />
+			<h4>Main Exam Scores</h4>
+			<center>
+			<div id="main_score_dist" class="shiny-plot-output" style="width: 80%; max-width: 500px; height: 400px;"></div>
+			</center>
 		</div>
 		<hr />
 		<center>
