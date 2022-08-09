@@ -7,32 +7,33 @@
 	{{ includeCSS('www/bootstrap.css') }}
 	{{ includeCSS('www/main.css') }}
 	{{ includeCSS('www/stats-table.css') }}
-
-</style>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
 	<body>
   
-		<div style="margin-left:10%; margin-right:10%">
+		<div class="wrapper">
 			<!--<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div>
 			
 			<br />
 			-->
 			<h1 class="title">TNPSC Group 1 Exam Statistics</h1>
 			<h4>Use <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">open data</a> from the 2019 Group 1 Recruitment to learn about the selection rate</h4>
-			<div>Background information about this recruitment:
+			<br />
+			<div class="explanation">Background information about this recruitment:
 				<ul>
 					<li>Total vacancies: 181</li>
 					<li>Reservation details: <a href="https://tnpsc.gov.in/Document/English/2019_01_Gr_I_Addendum.pdf">click here</a> for more information</li>
 				</ul>
 			</div>
-			<div>When using this application, please keep the following points in mind:
+			<!--<div class="explanation">When using this application, please keep the following points in mind:
 				<ul>
 					<li>The selection rate may not be exactly the same in future recruitments, due to factors that change from year to year.</li>
 					<li>Still, these statstics are useful because the selection rate is unlikely to change too much between recruitments, so they provide us with a general understanding of the difficulty of getting selected for specific types of candidates.</li>
 				</ul>			
-			</div>
+			</div>-->
 			<hr />
 			<h4 class="form-heading">Show me statistics for candidates with the following background</h4>			
 			<form>
@@ -102,16 +103,17 @@
 				  <option value="VIRUDHUNAGAR">Virudhunagar</option>
 				</select>
 				<label for="disability">Disability</label><select name="disability" id="disability">
-				  <option value="NONE">None</option>
+				  <option value="ANY">Any</option>
+				  <option value="none">None</option>
 				  <option value="blind">Visual Impairment</option>
 				  <option value="deaf">Hearing Impairment</option>
 				  <option value="ortho">Orthopaedic Impairment</option>
 				  <option value="multda">Multiple Disabilities</option>
 				</select>
-				<label for="">Special reservations</label>
+				<label for="">Other reservations</label>
 				<div>
 					<table>
-						<tr><td><input type="checkbox" id="pstm" name="pstm"><label for="pstm" class="checkbox-label">Studied in Tamil Medium (PSTM)</label></td></tr>
+						<tr><td><input type="checkbox" id="pstm" name="pstm"><label for="pstm" class="checkbox-label">Studied in Tamil Medium</label></td></tr>
 						<tr><td><input type="checkbox" id="widow" name="widow"><label for="widow" class="checkbox-label">Destitute Widow</label></td></tr>
 						<tr><td><input type="checkbox" id="exservice" name="exservice"><label for="exservice" class="checkbox-label">Ex-Serviceman</label></td></tr>
 					</table>
@@ -120,7 +122,7 @@
 			<hr />
 			<!-- Inspired from: https://codepen.io/vivek-kumar/pen/naMJBM -->
 			<div class="stats-table">
-				<h1 class="heading">
+				<h1 class="stats-heading">
 					Selection Statistics
 				</h1>
 				<p class="selection-rate">Overall Selection Rate<div id="selection_rate_overall" class="shiny-text-output selection-rate"></div></p>
@@ -140,7 +142,7 @@
 				<img src="down-arrow-svgrepo-com.svg"></img>
 				<!-- SELECTED FOR MAIN EXAM -->
 				<div class="block box2">
-					<h2 class="title">Selected for Main Exam</h2>
+					<h2 class="title">Appeared for Main Exam</h2>
 					<!-- CONTENT -->
 					<div class="content">
 					  <p class="statvalue">
@@ -168,30 +170,25 @@
 			</div>
 			<!-- /STATS-TABLE -->
 		<hr />
-		<div class="stats-table">
-			<h1 class="heading">
+		<div class="stats-graph">
+			<h1 class="stats-heading-2">
 				Detailed Performance Statistics
 			</h1>
-			<h4>Prelim Exam Scores</h4>
+			<div class="graph-info">Click on the graph for additional information</div>
+			<h4 class="graph-heading">Prelim Exam Scores</h4>
 			<center>
-			<div class="container-fluid">
-				{{ girafeOutput("prelim_score_dist") }}
-			</div>
+				{{ girafeOutput("prelim_score_dist", width="100%", height = "40vh") }}
 			</center>
-			<br />
-			<h4>Main Exam Scores</h4>
+			<h4 class="graph-heading">Main Exam Scores</h4>
 			<center>
-			<!--<div id="main_score_dist" class="girafe html-widget html-widget-output shiny-bound-output" style="width: 80%; max-width: 500px; height: 400px;"></div>-->
-			<div class="container-fluid">
-				{{ girafeOutput("main_score_dist") }}
-			</div>
+				{{ girafeOutput("main_score_dist", width="100%", height = "40vh") }}
 			</center>
 		</div>
 		<hr />
 		<center>
 			<div id="about">
-				<p>Developed by the TNPSC Aspirants and Alumni Research Study, based at Azim Premji University</p>
-				<p>Data provided by the <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">Tamil Nadu Public Service Commission</a> through the Open Data Policy</p>
+				<p>Developed by the <a href="https://www.facebook.com/tnpsc.research">TNPSC Aspirants and Alumni Research Study</a>, based at Azim Premji University</p>
+				<p>Data obtained through the <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">Tamil Nadu Public Service Commission</a>'s Open Data Policy</p>
 			</div>
 		</center>
 

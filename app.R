@@ -77,7 +77,7 @@ f.filter_data <- function(input){
     df.filtered <- df.filtered %>% filter(nativedistrict == input$nativedistrict)
   }
   
-  if (input$disability != "NONE"){
+  if (input$disability != "ANY"){
     df.filtered <- df.filtered %>% filter(disability == input$disability)
   }
   
@@ -122,10 +122,13 @@ f.prelim_score_dist <- function(input){
     mutate(score.bin = floor(total.prelim / 10) * 10) %>%
     group_by(score.bin) %>%
     summarise(n = n()) %>%
+    arrange(desc(score.bin)) %>%
+    mutate(cn = cumsum(n)) %>%
+    mutate(cntip = paste0(f.format_number(cn), " candidates scored more than ", score.bin, " marks")) %>%
     ggplot(aes(x = score.bin, y = n)) +
       xlab("") +
       ylab("Number of candidates") +
-      geom_col_interactive(aes(tooltip = n), color = 'black', fill = "#0eb074") +
+      geom_col_interactive(aes(tooltip = cntip), color = 'black', fill = "#0eb074") +
       theme_bw() +
       theme(axis.text = element_text(size = 12), 
           axis.title=element_text(size=16))
@@ -136,10 +139,16 @@ f.main_score_dist <- function(input){
   df.filtered <- f.filter_data(input)
   plot <- df.filtered %>%
     filter(!is.na(total.main)) %>%
-    ggplot(aes(x = total.main)) +
+    mutate(score.bin = floor(total.main / 10) * 10) %>%
+    group_by(score.bin) %>%
+    summarise(n = n()) %>%
+    arrange(desc(score.bin)) %>%
+    mutate(cn = cumsum(n)) %>%
+    mutate(cntip = paste0(f.format_number(cn), " candidates scored more than ", score.bin, " marks")) %>%
+    ggplot(aes(x = score.bin, y = n)) +
     xlab("") +
     ylab("Number of candidates") +
-    geom_histogram(color = 'black', fill = "#0eb074", binwidth = 10) +
+    geom_col_interactive(aes(tooltip = cntip), color = 'black', fill = "#0eb074") +
     theme_bw() +
     theme(axis.text = element_text(size = 12), 
           axis.title=element_text(size=16))

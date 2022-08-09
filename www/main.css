@@ -1,7 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
 
+div.wrapper {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+	
 text {
   font: "Lato", sans-serif;
+}
+
+div.explanation {
+	font-size: 1rem;
 }
 
 a {
@@ -23,11 +32,24 @@ label.checkbox-label {
 	padding-left: 5px;
 }
 
-form {
-  display: grid;
-  grid-template-columns: 100px 300px;
-  column-gap: 10px;
-  row-gap: 1em;
+@media screen and (max-width: 600px) {
+
+	form {
+	  display: grid;
+	  grid-template-columns: 1fr 2.5fr;
+	  column-gap: 10px;
+	  row-gap: 1em;
+	}
+}
+
+@media screen and (min-width: 601px) {
+
+	form {
+	  display: grid;
+	  grid-template-columns: 100px 300px;
+	  column-gap: 10px;
+	  row-gap: 1em;
+	}
 }
 
 .form-heading {
