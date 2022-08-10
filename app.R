@@ -47,19 +47,7 @@ f.format_number <- function(n) {
 
 f.filter_data <- function(input){
   
-  input.pstm <- f.format_input(input$pstm)
-  input.exservice <- f.format_input(input$exservice)
-  input.widow <- f.format_input(input$widow)
-  
-  input.blind <- f.format_input(input$blind)
-  input.deaf <- f.format_input(input$deaf)
-  input.ortho <- f.format_input(input$ortho)
-  
-  # Filter check boxes
-  df.filtered <- df %>%
-    filter(pstm >= input.pstm,
-           exservice >= input.exservice, 
-           widow >= input.widow)
+  df.filtered <- df
   
   if (input$gender != "ANY"){
     df.filtered <- df.filtered %>% filter(gender == input$gender)
@@ -75,6 +63,10 @@ f.filter_data <- function(input){
   
   if (input$nativedistrict != "ANY") {
     df.filtered <- df.filtered %>% filter(nativedistrict == input$nativedistrict)
+  }
+  
+  if (input$pstm != "ANY") {
+    df.filtered <- df.filtered %>% filter(pstm == as.integer(input$pstm))
   }
   
   if (input$disability != "ANY"){
@@ -113,7 +105,6 @@ f.filter_selection_rate_overall <- function(input){
   }
 
 }
-
 
 f.prelim_score_dist <- function(input){
   df.filtered <- f.filter_data(input)
@@ -163,6 +154,7 @@ f.main_score_dist <- function(input){
 # https://airbnb.io/polyglot.js/
 # https://appsilon.com/internationalization-of-shiny-apps-i18n/
 #i18n <- Translator$new(translation_csvs_path = "./translation")
+#i18n$set_translation_language("en")
 
 ####################################################################
 # Load data

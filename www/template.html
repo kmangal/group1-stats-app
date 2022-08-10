@@ -12,6 +12,16 @@
 
 </head>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HPXDMCPRZH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HPXDMCPRZH');
+</script>
+
 	<body>
   
 		<div class="wrapper">
@@ -102,6 +112,11 @@
 				  <option value="VILLUPURAM">Viillupruam</option>
 				  <option value="VIRUDHUNAGAR">Virudhunagar</option>
 				</select>
+				<label for="pstm">Studied in Tamil Medium</label><select name="pstm" id="pstm">
+				  <option value="ANY">Any</option>
+				  <option value="1">Yes</option>
+				  <option value="0">No</option>
+				</select>
 				<label for="disability">Disability</label><select name="disability" id="disability">
 				  <option value="ANY">Any</option>
 				  <option value="none">None</option>
@@ -110,14 +125,6 @@
 				  <option value="ortho">Orthopaedic Impairment</option>
 				  <option value="multda">Multiple Disabilities</option>
 				</select>
-				<label for="">Other reservations</label>
-				<div>
-					<table>
-						<tr><td><input type="checkbox" id="pstm" name="pstm"><label for="pstm" class="checkbox-label">Studied in Tamil Medium</label></td></tr>
-						<tr><td><input type="checkbox" id="widow" name="widow"><label for="widow" class="checkbox-label">Destitute Widow</label></td></tr>
-						<tr><td><input type="checkbox" id="exservice" name="exservice"><label for="exservice" class="checkbox-label">Ex-Serviceman</label></td></tr>
-					</table>
-				</div>
 				</form>
 			<hr />
 			<!-- Inspired from: https://codepen.io/vivek-kumar/pen/naMJBM -->
