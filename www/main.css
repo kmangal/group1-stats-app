@@ -4,6 +4,17 @@ div.wrapper {
 	margin-left: 10%;
 	margin-right: 10%;
 }
+
+button.lang-change {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #118a5d;
+  cursor: pointer;
+}
 	
 text {
   font: "Lato", sans-serif;

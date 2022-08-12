@@ -22,20 +22,32 @@
   gtag('config', 'G-HPXDMCPRZH');
 </script>
 
+<script>
+
+	function setlanguageEN() {
+		Shiny.setInputValue("selected_language", "en", {priority: "event"});
+	};
+
+	function setlanguageTA() {
+		Shiny.setInputValue("selected_language", "ta", {priority: "event"});
+	};
+
+</script>
+
 	<body>
+	
+		{{ shiny.i18n::usei18n(i18n) }}
   
 		<div class="wrapper">
-			<!--<div style="text-align: right;">Langauge: <a>English</a> | <a>தமிழ்</a></div>
-			
+			<div style="text-align: right;">Langauge: <button class="lang-change" onclick="setlanguageEN()">English</button> | <button class="lang-change" onclick="setlanguageTA()"> தமிழ்</button></div>
 			<br />
-			-->
-			<h1 class="title">TNPSC Group 1 Exam Statistics</h1>
-			<h4>Use <a href="https://tnpsc.gov.in/English/OpenDataPolicy.aspx">open data</a> from the 2019 Group 1 Recruitment to learn about the selection rate</h4>
+			<h1 class="title">{{ i18n$t("TNPSC Group 1 Exam Statistics") }} </h1>
+			<h4>{{ i18n$t("Use ") }} <a href='https://tnpsc.gov.in/English/OpenDataPolicy.aspx'>{{ i18n$t("open data") }} </a> {{ i18n$t(" from the 2019 Group 1 Recruitment to learn about the selection rate") }} </h4>
 			<br />
-			<div class="explanation">Background information about this recruitment:
+			<div class="explanation">{{ i18n$t("Background information about this recruitment:") }}
 				<ul>
-					<li>Total vacancies: 181</li>
-					<li>Reservation details: <a href="https://tnpsc.gov.in/Document/English/2019_01_Gr_I_Addendum.pdf">click here</a> for more information</li>
+					<li>{{ i18n$t("Total vacancies: 181") }}</li>
+					<li>{{ i18n$t("Reservation details: ") }}<a href="https://tnpsc.gov.in/Document/English/2019_01_Gr_I_Addendum.pdf">{{ i18n$t("click here") }}</a>{{ i18n$t(" for more information") }}</li>
 				</ul>
 			</div>
 			<!--<div class="explanation">When using this application, please keep the following points in mind:
@@ -45,9 +57,10 @@
 				</ul>			
 			</div>-->
 			<hr />
-			<h4 class="form-heading">Show me statistics for candidates with the following background</h4>			
+			<h4 class="form-heading">{{ i18n$t("Show me statistics for candidates with the following background") }}</h4>			
 			<form>
-				<label for="gender">Gender</label><select name="gender" id="gender">
+				<label for="gender">{{ i18n$t("Gender") }}</label>
+				<select name="gender" id="gender">
 				  <option value="ANY">Any</option>
 				  <option value="MALE">Male</option>
 				  <option value="FEMALE">Female</option>
@@ -63,20 +76,20 @@
 				  <option value="ST">Scheduled Tribe</option>
 				  <option value="OTHERS">Others</option>				  
 				</select>-->
-				<label for="age">Age</label><select name="age" id="age">
+				<label for="age">{{ i18n$t("Age") }}</label><select name="age" id="age">
 				  <option value="ANY">Any</option>
 				  <option value="21_25">21-25</option>
 				  <option value="26_30">26-30</option>
 				  <option value="31_35">31-35</option>
 				  <option value="36+">36+</option>
 				</select>
-				<label for="qualification">Highest Degree</label><select name="qualification" id="qualification">
+				<label for="qualification">{{ i18n$t("Highest Degree") }}</label><select name="qualification" id="qualification">
 				  <option value="ANY">Any</option>
 				  <option value="UG">Undergraduate</option>
 				  <option value="PG">Postgraduate</option>
 				  <option value="MPhil/PhD">MPhil / PhD</option>
 				</select>
-				<label for="nativedistrict">Native District</label><select name="nativedistrict" id="nativedistrict">
+				<label for="nativedistrict">{{ i18n$t("Native District") }}</label><select name="nativedistrict" id="nativedistrict">
 				  <option value="ANY">Any</option>
 				  <option value="ARIYALUR">Ariyalur</option>
 				  <option value="CHENNAI">Chennai</option>
@@ -112,30 +125,27 @@
 				  <option value="VILLUPURAM">Viillupruam</option>
 				  <option value="VIRUDHUNAGAR">Virudhunagar</option>
 				</select>
-				<label for="pstm">Studied in Tamil Medium</label><select name="pstm" id="pstm">
+				<label for="pstm">{{ i18n$t("Studied in Tamil Medium") }}</label><select name="pstm" id="pstm">
 				  <option value="ANY">Any</option>
 				  <option value="1">Yes</option>
 				  <option value="0">No</option>
 				</select>
-				<label for="disability">Disability</label><select name="disability" id="disability">
+				<label for="disability">{{ i18n$t("Disability") }}</label><select name="disability" id="disability">
 				  <option value="ANY">Any</option>
-				  <option value="none">None</option>
-				  <option value="blind">Visual Impairment</option>
-				  <option value="deaf">Hearing Impairment</option>
-				  <option value="ortho">Orthopaedic Impairment</option>
-				  <option value="multda">Multiple Disabilities</option>
+				  <option value="1">Yes</option>
+				  <option value="0">No</option>
 				</select>
 				</form>
 			<hr />
 			<!-- Inspired from: https://codepen.io/vivek-kumar/pen/naMJBM -->
 			<div class="stats-table">
 				<h1 class="stats-heading">
-					Selection Statistics
+					{{ i18n$t("Selection Statistics") }}
 				</h1>
-				<p class="selection-rate">Overall Selection Rate<div id="selection_rate_overall" class="shiny-text-output selection-rate"></div></p>
+				<p class="selection-rate">{{ i18n$t("Overall Selection Rate") }}<div id="selection_rate_overall" class="shiny-text-output selection-rate"></div></p>
 				<!-- WROTE PRELIM EXAM -->
 				<div class="block box1">
-					<h2 class="title">Wrote Prelim Exam</h2>
+					<h2 class="title">{{ i18n$t("Wrote Prelim Exam") }}</h2>
 					<!-- CONTENT -->
 					<div class="content">
 						<p class="statvalue">
@@ -149,7 +159,7 @@
 				<img src="down-arrow-svgrepo-com.svg"></img>
 				<!-- SELECTED FOR MAIN EXAM -->
 				<div class="block box2">
-					<h2 class="title">Appeared for Main Exam</h2>
+					<h2 class="title">{{ i18n$t("Appeared for Main Exam") }}</h2>
 					<!-- CONTENT -->
 					<div class="content">
 					  <p class="statvalue">
@@ -163,7 +173,7 @@
 				<img src="down-arrow-svgrepo-com.svg"></img>
 				<!-- SELECTED FOR POST -->
 				<div class="block box3">
-					<h2 class="title">Selected for Post</h2>
+					<h2 class="title">{{ i18n$t("Selected for Post") }}</h2>
 					<!-- CONTENT -->
 					<div class="content">
 						<p class="statvalue">
@@ -179,14 +189,14 @@
 		<hr />
 		<div class="stats-graph">
 			<h1 class="stats-heading-2">
-				Detailed Performance Statistics
+				{{ i18n$t("Detailed Performance Statistics") }}
 			</h1>
-			<div class="graph-info">Click on the graph for additional information</div>
-			<h4 class="graph-heading">Prelim Exam Scores</h4>
+			<div class="graph-info">{{ i18n$t("Click on the graph for additional information") }}</div>
+			<h4 class="graph-heading">{{ i18n$t("Prelim Exam Scores") }}</h4>
 			<center>
 				{{ girafeOutput("prelim_score_dist", width="100%", height = "40vh") }}
 			</center>
-			<h4 class="graph-heading">Main Exam Scores</h4>
+			<h4 class="graph-heading">{{ i18n$t("Main Exam Scores") }}</h4>
 			<center>
 				{{ girafeOutput("main_score_dist", width="100%", height = "40vh") }}
 			</center>

@@ -1,0 +1,53 @@
+﻿id,value,en,ta
+gender,ANY,Any,எதாவது
+gender,MALE,Male,ஆண்
+gender,FEMALE,Female,பெண்
+age,ANY,Any,எதாவது
+age,21_25,21-25,21-25
+age,26_30,26-30,26-30
+age,31_35,31-35,31-35
+age,36+,36+,36+
+qualification,ANY,Any,எதாவது
+qualification,UG,Undergraduate,இளங்கலை பட்டதாரி
+qualification,PG,Postgraduate,முதுகலைப் பட்டதாரி
+qualification,MPhil/PhD,MPhil / PhD,எம்ஃபில்/பிஎச்டி
+pstm,ANY,Any,எதாவது
+pstm,1,Yes,ஆம்
+pstm,0,No,இல்லை
+disability,ANY,Any,எதாவது
+disability,1,Yes,ஆம்
+disability,0,No,இல்லை
+nativedistrict,ANY,Any,எதாவது
+nativedistrict,ARIYALUR,Ariyalur,அரியலூர்
+nativedistrict,CHENNAI,Chennai,சென்னை
+nativedistrict,COIMBATORE,Coimbatore,கோயம்புத்தூர்
+nativedistrict,CUDDALORE,Cuddalore,கூடலூர்
+nativedistrict,DHARMAPURI,Dharmapuri,தர்மபுரி
+nativedistrict,DINDIGUL,Dindigul,திண்டுக்கல்
+nativedistrict,ERODE,Erode,ஈரோடு
+nativedistrict,KANCHEEPURAM,Kancheepuram,காஞ்சீபுரம்
+nativedistrict,KANNIYAKUMARI,Kanniyakumari,கன்னியாகுமரி
+nativedistrict,KARUR,Karur,கரூர்
+nativedistrict,KRISHNAGIRI,Krishnagiri,கிரிஷனகிரி
+nativedistrict,MADURAI,Madurai,மதுரை
+nativedistrict,NAGAPATTINAM,Nagapattinam,நாகபட்டினம்
+nativedistrict,NAMAKKAL,Namakkal,நாமக்கல்
+nativedistrict,OTHER THAN TAMILNADU,Other Than Tamilnadu,தமிழ் நாடுக்கு வெளியில்
+nativedistrict,PERAMBALUR,Perambalur,பெரம்பலூர்
+nativedistrict,PUDUKKOTTAI,Pudukkottai,புதுக்கோட்டை
+nativedistrict,RAMANATHAPURAM,Ramanathapuram,ராமநாதபுரம்
+nativedistrict,SALEM,Salem,சேலம்
+nativedistrict,SIVAGANGAI,Sivagangai,சிவகங்கை
+nativedistrict,THANJAVUR,Thanjavur,தஞ்சாவூர்
+nativedistrict,THE NILGIRIS,The Nilgiris,நிலகிரீஸ்
+nativedistrict,THENI,Theni,தேனி
+nativedistrict,THIRUNELVELI,Thirunelveli,திருநெல்வேலி
+nativedistrict,THIRUVALLUR,Thiruvallur,திருவள்ளூர் 
+nativedistrict,THIRUVANNAMALAI,Thiruvannamalai,திருவண்ணாமலை
+nativedistrict,THIRUVARUR,Thiruvarur,திருவாரூர்
+nativedistrict,THOOTHUKUDI,Thoothukudi,தூத்துக்குடி
+nativedistrict,TIRUCHIRAPALLI,Tiruchirapalli,திருச்சிராபள்ளி
+nativedistrict,TIRUPPUR,Tiruppur,திருப்பூர்
+nativedistrict,VELLORE,Vellore,வேலூர்
+nativedistrict,VILLUPURAM,Villupuram,விழுப்புரம்
+nativedistrict,VIRUDHUNAGAR,Virudhunagar,விருதுநகர்

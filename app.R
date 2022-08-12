@@ -53,10 +53,6 @@ f.filter_data <- function(input){
     df.filtered <- df.filtered %>% filter(gender == input$gender)
   }
   
-  #if (input$community != "ANY"){
-  #  df.filtered <- df.filtered %>% filter(community == input$community)
-  #}
-  
   if (input$qualification != "ANY") {
     df.filtered <- df.filtered %>% filter(highest.qual == input$qualification)
   }
@@ -70,7 +66,7 @@ f.filter_data <- function(input){
   }
   
   if (input$disability != "ANY"){
-    df.filtered <- df.filtered %>% filter(disability == input$disability)
+    df.filtered <- df.filtered %>% filter(disability == as.integer(input$disability))
   }
   
   if (input$age != "ANY") {
@@ -95,19 +91,24 @@ f.filter_count <- function(input, var) {
 f.filter_selection_rate_overall <- function(input){
   wrote.prelim <- f.filter_count(input, 'wrote.prelim')
   selected <- f.filter_count(input, 'selected')
-  
+
   if (selected == 0){
-    return("Selection rate too low to estimate")
+    selection.rate.too.low <- i18n$t("Selection rate too low to estimate")
+    return(selection.rate.too.low)
   }
   else {
     x <- round(wrote.prelim / selected, 0)
-    return(paste0("1 in ", f.format_number(x)))
-  }
-
+    selection.rate <- case_when(
+      currentLanguage == "en" ~ paste0("1 in ", f.format_number(x)),
+      currentLanguage == "ta" ~ paste0(f.format_number(x), " இல் 1")
+    )
+    return(selection.rate)
+  }    
 }
 
 f.prelim_score_dist <- function(input){
   df.filtered <- f.filter_data(input)
+  
   plot <- df.filtered %>%
     filter(!is.na(total.prelim)) %>%
     mutate(score.bin = floor(total.prelim / 10) * 10) %>%
@@ -118,8 +119,8 @@ f.prelim_score_dist <- function(input){
     mutate(cntip = paste0(f.format_number(cn), " candidates scored more than ", score.bin, " marks")) %>%
     ggplot(aes(x = score.bin, y = n)) +
       xlab("") +
-      ylab("Number of candidates") +
-      geom_col_interactive(aes(tooltip = cntip), color = 'black', fill = "#0eb074") +
+    ylab(i18n$t("Number of candidates")) +
+    geom_col_interactive(aes(tooltip = cntip), color = 'black', fill = "#0eb074") +
       theme_bw() +
       theme(axis.text = element_text(size = 12), 
           axis.title=element_text(size=16))
@@ -138,7 +139,7 @@ f.main_score_dist <- function(input){
     mutate(cntip = paste0(f.format_number(cn), " candidates scored more than ", score.bin, " marks")) %>%
     ggplot(aes(x = score.bin, y = n)) +
     xlab("") +
-    ylab("Number of candidates") +
+    ylab(i18n$t("Number of candidates")) +
     geom_col_interactive(aes(tooltip = cntip), color = 'black', fill = "#0eb074") +
     theme_bw() +
     theme(axis.text = element_text(size = 12), 
@@ -149,12 +150,19 @@ f.main_score_dist <- function(input){
 ####################################################################
 # Translation logic
 
-# TODO: IMPLEMENT TRANSLATION LOGIC
-# https://www.r-bloggers.com/2014/11/another-take-on-building-a-multi-lingual-shiny-app/
-# https://airbnb.io/polyglot.js/
-# https://appsilon.com/internationalization-of-shiny-apps-i18n/
-#i18n <- Translator$new(translation_csvs_path = "./translation")
-#i18n$set_translation_language("en")
+# REFERENCE: https://appsilon.com/internationalization-of-shiny-apps-i18n/
+i18n <- Translator$new(translation_csvs_path = "./translations/i18n/")
+i18n$set_translation_language("en")
+currentLanguage <<- "en"
+
+dropdown.translation <- read.csv('translations/dropdown_translation.csv')
+
+f.update_dropdown <- function(session, selected_language, dropdownid){
+  dd.filtered <- dropdown.translation %>% filter(id == dropdownid)
+  updateSelectInput(session, dropdownid, 
+                    choices = setNames(dd.filtered[['value']], 
+                                       dd.filtered[[selected_language]]))
+}
 
 ####################################################################
 # Load data
@@ -164,7 +172,27 @@ df <- readRDS('data/clean/merged_01_2019.Rds')
 ####################################################################
 # Sever logic
 
-server <- function(input, output) {
+server <- function(input, output, session) {
+  
+  observeEvent(input$selected_language, {
+    #print(paste("Language changed to:", input$selected_language))
+    shiny.i18n::update_lang(session, input$selected_language)
+    currentLanguage <<- input$selected_language
+    
+    # Update dropdowns
+    f.update_dropdown(session, input$selected_language, 'gender')
+    f.update_dropdown(session, input$selected_language, 'age')
+    f.update_dropdown(session, input$selected_language, 'qualification')
+    f.update_dropdown(session, input$selected_language, 'nativedistrict')
+    f.update_dropdown(session, input$selected_language, 'pstm')
+    f.update_dropdown(session, input$selected_language, 'disability')
+    
+    # Update selection rate text
+    output$selection_rate_overall <- renderText({
+      f.filter_selection_rate_overall(input)
+    })
+    
+  })
   
   output$wrote_prelim <- renderText({ 
     f.format_number(f.filter_count(input, 'wrote.prelim'))
@@ -196,5 +224,5 @@ server <- function(input, output) {
 # Run the application 
 
 html <- read_file("www/template.html")
-ui <- htmlTemplate(text_ = html)
+ui <- htmlTemplate(text_ = html, i18n = i18n)
 shinyApp(ui = ui, server = server)
